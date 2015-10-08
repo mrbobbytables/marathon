@@ -5,9 +5,9 @@ An Ubuntu based Marathon container with the capability of logging to both standa
 
 ##### Version Information:
 
-* **Container Release:** 1.0.0
+* **Container Release:** 1.0.1
 * **Mesos:** 0.23.0
-* **Marathon:** 0.10.1-1.0.416.ubuntu1404
+* **Marathon:** 0.11.0-1.0.425.ubuntu1404
 
 **Services Include**
 * **[Marathon](#marathon)** - A cluster wide init framework for Mesos.

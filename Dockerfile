@@ -1,18 +1,18 @@
 ################################################################################
-# marathon:1.0.0
-# Date: 9/27/2015
-# Marathon Version: 0.10.1-1.0.416.ubuntu1404
+# marathon:1.0.1
+# Date: 10/7/2015
+# Marathon Version: 0.11.0-1.0.425.ubuntu1404
 # Mesos Version: 0.23.0-1.0
 #
 # Description:
 # Marathon Mesos framework. Made for executing long running processes
 ################################################################################
 
-FROM mrbobbytables/mesos-base:1.0.0
+FROM mrbobbytables/mesos-base:1.0.1
 MAINTAINER Bob Killen / killen.bob@gmail.com / @mrbobbytables
 
 
-ENV VERSION_MARATHON=0.10.1-1.0.416.ubuntu1404
+ENV VERSION_MARATHON=0.11.0-1.0.425.ubuntu1404
 
 RUN apt-get -y update                   \
  && apt-get -y install                  \
