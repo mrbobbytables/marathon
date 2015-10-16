@@ -1,3 +1,8 @@
+2015-10-16 - 1.0.2:
+  - Bumped to Mesos 0.23.1-0.2.61.ubuntu1404
+  - fixed bug with marathon version in dockerfile
+  - backed release to older version of marathon to maintain compatibility with bamboo
+
 2015-10-07 - 1.0.1:
   - Updated to use Oracle java 8.
   - Bump to Marathon version 0.11.0-1.0.425.ubuntu1404
