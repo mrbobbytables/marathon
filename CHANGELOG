@@ -1,3 +1,6 @@
+2015-10-17 - 1.0.3:
+ - Bump Marathon release to 0.11.1-1.0.432.ubuntu1404, working with bamboo again.
+
 2015-10-16 - 1.0.2:
   - Bumped to Mesos 0.23.1-0.2.61.ubuntu1404
   - fixed bug with marathon version in dockerfile
