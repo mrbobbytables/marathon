@@ -6,8 +6,8 @@ An Ubuntu based Marathon container with the capability of logging to both standa
 ##### Version Information:
 
 * **Container Release:** 1.1.0
-* **Mesos:** 0.24.1
-* **Marathon:** 0.10.1-1.0.416.ubuntu1404
+* **Mesos:**  0.24.1-0.2.35.ubuntu1404
+* **Marathon:** 0.11.1-1.0.432.ubuntu1404
 
 **Services Include**
 * **[Marathon](#marathon)** - A cluster wide init framework for Mesos.
@@ -32,9 +32,9 @@ An Ubuntu based Marathon container with the capability of logging to both standa
 ---
 
 ### Usage
-When running the Marathon container in a `production` or `deveopment` environment, the container **MUST** be run with host networking and several environment variables should be specified to function correctly.
+When running the Marathon container in a `production` or `development` environment, the container **MUST** be run with host networking and several environment variables should be specified to function correctly.
 
-* `ENVIRONMENT` - `ENVIRONMENT` will enable or disable serivces and change the value of several other environment variables based on where the container is running (`prod`, `local` etc.). Please see the [Environment](#environment) section under [Important Environment Variables](#important-environment-variables).
+* `ENVIRONMENT` - `ENVIRONMENT` will enable or disable services and change the value of several other environment variables based on where the container is running (`prod`, `local` etc.). Please see the [Environment](#environment) section under [Important Environment Variables](#important-environment-variables).
 
 * `LIBPROCESS_PORT` - The port that is used to communicate with Mesos. If running on a host with another Mesos framework or an instance of Mesos-Master or Mesos-Slave, this should be set to unique port (default `9000`).
 
@@ -70,21 +70,21 @@ marathon
 ### Modification and Anatomy of the Project
 
 **File Structure**
-The directory `skel` in the project root maps to the root of the filesystem once the container is built. Files and folders placed there will map to their corrisponding location within the container.
+The directory `skel` in the project root maps to the root of the file system once the container is built. Files and folders placed there will map to their corresponding location within the container.
 
 **Init**
-The init script (`./init.sh`) found at the root of the directory is the entry process for the container. It's role is to simply set specific environment variables and modify any subsiquently required configuration files.
+The init script (`./init.sh`) found at the root of the directory is the entry process for the container. It's role is to simply set specific environment variables and modify any subsequently required configuration files.
 
 **Marathon**
 The marathon configuration will automatically be generated at runtime, however logging options are specified in `/etc/marathon/log4j.properties`.
 
 **Supervisord**
-All supervisord configs can be found in `/etc/supervisor/conf.d/`. Services by default will redirect their stdout to `/dev/fd/1` and stderr to `/dev/fd/2` allowing for service's console output to be displayed. Most applications can log to both stdout and their respecively specified log file.
+All supervisord configs can be found in `/etc/supervisor/conf.d/`. Services by default will redirect their stdout to `/dev/fd/1` and stderr to `/dev/fd/2` allowing for service's console output to be displayed. Most applications can log to both stdout and their respectively specified log file.
 
 In some cases (such as with zookeeper), it is possible to specify different logging levels and formats for each location.
 
 **Logstash-Forwarder**
-The Logstash-Forwarder binary and default configuration file can be found in `/skel/opt/logstash-forwarder`. It is ideal to bake the Logstash Server certificate into the base container at this location. If the certificate is called `logstash-forwarder.crt`, the default supplied Logstash-Forwarder config should not need to be modified, and the server setting may be passed through the `SERICE_LOGSTASH_FORWARDER_ADDRESS` environment variable.
+The Logstash-Forwarder binary and default configuration file can be found in `/skel/opt/logstash-forwarder`. It is ideal to bake the Logstash Server certificate into the base container at this location. If the certificate is called `logstash-forwarder.crt`, the default supplied Logstash-Forwarder config should not need to be modified, and the server setting may be passed through the `SERVICE_LOGSTASH_FORWARDER_ADDRESS` environment variable.
 
 In practice, the supplied Logstash-Forwarder config should be used as an example to produce one tailored to each deployment.
 
@@ -298,7 +298,7 @@ Redpill - Supervisor status monitor. Terminates the supervisor process if any sp
 
 -c | --cleanup    Optional path to cleanup script that should be executed upon exit.
 -h | --help       This help text.
--i | --inerval    Optional interval at which the service check is performed in seconds. (Default: 30)
+-i | --interval   Optional interval at which the service check is performed in seconds. (Default: 30)
 -s | --service    A comma delimited list of the supervisor service names that should be monitored.
 ```
 
@@ -310,5 +310,7 @@ Redpill - Supervisor status monitor. Terminates the supervisor process if any sp
 In the event of an issue, the `ENVIRONMENT` variable can be set to `debug`.  This will stop the container from shipping logs and prevent it from terminating if one of the services enters a failed state.
 
 If a higher level of logging is required, override either `MARATHON_LOG_FILE_THRESHOLD` or `MARATHON_LOG_STDOUT_THRESHOLD` with `TRACE` or `ALL`. Please note - this logging level is incredibly verbose. Only set it to that level if truly necessary.
+
+
 
 

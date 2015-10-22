@@ -1,7 +1,7 @@
 ################################################################################
-# marathon:1.1.0
-# Date: 9/29/2015
-# Marathon Version: 0.10.1-1.0.416.ubuntu1404
+# marathon: 1.1.0
+# Date: 10/22/2015
+# Marathon Version: 0.11.1-1.0.432.ubuntu1404
 # Mesos Version: 0.24.1-0.2.35.ubuntu1404
 #
 # Description:
@@ -9,14 +9,15 @@
 ################################################################################
 
 FROM mrbobbytables/mesos-base:1.1.0
+
 MAINTAINER Bob Killen / killen.bob@gmail.com / @mrbobbytables
 
 
-ENV VERSION_MARATHON=0.10.1-1.0.416.ubuntu1404
+ENV VERSION_MARATHON=0.11.1-1.0.432.ubuntu1404
 
 RUN apt-get -y update                   \
  && apt-get -y install                  \
-    marathon=0.10.1-1.0.416.ubuntu1404  \
+    marathon=$VERSION_MARATHON          \
  && mkdir -p /etc/marathon/conf         \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
    
