@@ -1,6 +1,6 @@
 ################################################################################
-# marathon: 1.1.0
-# Date: 10/22/2015
+# marathon: 1.1.1
+# Date: 11/23/2015
 # Marathon Version: 0.11.1-1.0.432.ubuntu1404
 # Mesos Version: 0.24.1-0.2.35.ubuntu1404
 #
@@ -8,7 +8,7 @@
 # Marathon Mesos framework. Made for executing long running processes
 ################################################################################
 
-FROM mrbobbytables/mesos-base:1.1.0
+FROM mrbobbytables/mesos-base:1.1.2
 
 MAINTAINER Bob Killen / killen.bob@gmail.com / @mrbobbytables
 
