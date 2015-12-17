@@ -61,29 +61,9 @@ init_vars() {
 
 
 config_marathon() {
-  #logging settings for log4j and default JAVA_OPTS
-  local log_stdout_layout=""
-  local log_file_layout=""
-  local marathon_cmd=""
-
-  case "${MARATHON_LOG_STDOUT_LAYOUT,,}" in
-    json) log_stdout_layout="net.logstash.log4j.JSONEventLayoutV1";;
-    standard|*) log_stdout_layout="org.apache.log4j.PatternLayout";;
-  esac
-
-  case "${MARATHON_LOG_FILE_LAYOUT,,}" in
-    json) log_file_layout="net.logstash.log4j.JSONEventLayoutV1";;
-    standard|*) log_file_layout="org.apache.log4j.PatternLayout";;
-  esac
 
 jvm_opts=( "-Djava.library.path=/usr/local/lib:/usr/lib64:/usr/lib"
-           "-Dlog4j.configuration=file:/etc/marathon/log4j.properties"
-           "-Dlog.stdout.layout=$log_stdout_layout"
-           "-Dlog.stdout.threshold=$MARATHON_LOG_STDOUT_THRESHOLD"
-           "-Dlog.file.layout=$log_file_layout"
-           "-Dlog.file.threshold=$MARATHON_LOG_FILE_THRESHOLD"
-           "-Dlog.file.dir=$MARATHON_LOG_DIR"
-           "-Dlog.file.name=$MARATHON_LOG_FILE")
+           "-Dlogback.configurationFile=/etc/marathon/logback.groovy")
 
   # Append extra JAVA_OPTS to jvm_opts
   for j_opt in $JAVA_OPTS; do
@@ -99,7 +79,7 @@ jvm_opts=( "-Djava.library.path=/usr/local/lib:/usr/lib64:/usr/lib"
     cmd_flags+=( "${!i}" )
   done
  
-  marathon_cmd="java ${jvm_opts[@]}  -cp $JSONLOG4JCP:/usr/bin/marathon mesosphere.marathon.Main ${cmd_flags[@]}"
+  marathon_cmd="java ${jvm_opts[@]}  -cp $JSONLOGBACK:/usr/bin/marathon mesosphere.marathon.Main ${cmd_flags[@]}"
   export SERVICE_MARATHON_CMD=${SERVICE_MARATHON_CMD:-"$(__escape_svsr_txt "$marathon_cmd")"}
 }
 
