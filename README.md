@@ -5,9 +5,9 @@ An Ubuntu based Marathon container with the capability of logging to both standa
 
 ##### Version Information:
 
-* **Container Release:** 1.1.1
-* **Mesos:**  0.24.1-0.2.35.ubuntu1404
-* **Marathon:** 0.11.1-1.0.432.ubuntu1404
+* **Container Release:** 1.2.0
+* **Mesos:**  0.25.0-0.2.70.ubuntu1404
+* **Marathon:** 0.13.0-1.0.440.ubuntu1404
 
 **Services Include**
 * **[Marathon](#marathon)** - A cluster wide init framework for Mesos.
@@ -59,7 +59,7 @@ For further configuration information, please see the [Marathon](#marathon) serv
 ---
 
 ### Example Run Command
-```
+```bash
 docker run -d    \
 --name marathon  \
 -e ENVIRONMENT=production   \
@@ -91,7 +91,7 @@ The directory `skel` in the project root maps to the root of the file system onc
 The init script (`./init.sh`) found at the root of the directory is the entry process for the container. It's role is to simply set specific environment variables and modify any subsequently required configuration files.
 
 **Marathon**
-The marathon configuration will automatically be generated at runtime, however logging options are specified in `/etc/marathon/log4j.properties`.
+The marathon configuration will automatically be generated at runtime, however logging options are specified in `/etc/marathon/logback.groovy`.
 
 **Supervisord**
 All supervisord configs can be found in `/etc/supervisor/conf.d/`. Services by default will redirect their stdout to `/dev/fd/1` and stderr to `/dev/fd/2` allowing for service's console output to be displayed. Most applications can log to both stdout and their respectively specified log file.

@@ -1,7 +1,7 @@
 ################################################################################
 # marathon: 1.2.0
 # Date: 11/23/2015
-# Marathon Version: 0.11.1-1.0.432.ubuntu1404
+# Marathon Version: 0.13.0-1.0.440.ubuntu1404
 # Mesos Version: 0.25.0-0.2.70.ubuntu1404
 #
 # Description:
