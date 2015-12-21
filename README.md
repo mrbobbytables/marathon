@@ -5,8 +5,8 @@ An Ubuntu based Marathon container with the capability of logging to both standa
 
 ##### Version Information:
 
-* **Container Release:** 1.2.0
-* **Mesos:**  0.25.0-0.2.70.ubuntu1404
+* **Container Release:** 1.2.1
+* **Mesos:** 0.26.0-0.2.145.ubuntu1404
 * **Marathon:** 0.13.0-1.0.440.ubuntu1404
 
 **Services Include**
