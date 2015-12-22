@@ -1,3 +1,6 @@
+2015-12-21 - 1.2.1:
+ - Bump to Mesos 0.26
+
 2015-12-17 - 1.2.0:
  - Bump to Mesos 0.25
  - Bump Marathon to 0.13
