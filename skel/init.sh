@@ -27,6 +27,14 @@ init_vars() {
   export MARATHON_LOG_FILE=${MARATHON_LOG_FILE:-marathon.log}
   export MARATHON_LOG_FILE_LAYOUT=${MARATHON_LOG_FILE_LAYOUT:-json}
 
+  # if consul template is to be used, configure rsyslog
+  export SERVICE_CONSUL_TEMPLATE=${SERVICE_CONSUL_TEMPLATE:-disabled}
+  if [[ "$SERVICE_CONSUL_TEMPLATE" == "enabled" ]]; then
+    export SERVICE_RSYSLOG=${SERVICE_RSYSLOG:-enabled}
+  fi
+  export SERVICE_LOGSTASH_FORWARDER_CONF=${SERVICE_LOGSTASH_FORWARDER_CONF:-/opt/logstash-forwarder/marathon.conf}
+  export SERVICE_REDPILL_MONITOR=${SERVICE_REDPILL_MONITOR:-marathon}
+
 
   case "${ENVIRONMENT,,}" in
     prod|production|dev|development)
@@ -42,6 +50,9 @@ init_vars() {
       export MARATHON_LOG_FILE_THRESHOLD=${MARATHON_LOG_FILE_THRESHOLD:-DEBUG}
       export SERVICE_LOGSTASH_FORWARDER=${SERVICE_LOGSTASH_FORWARDER:-disabled}
       export SERVICE_REDPILL=${SERVICE_REDPILL:-disabled}
+      if [[ "$SERVICE_CONSUL_TEMPLATE" == "enabled" ]]; then
+        export CONSUL_TEMPLATE_LOG_LEVEL=${CONSUL_TEMPLATE_LOG_LEVEL:-debug}
+      fi
       ;;
    local|*)
       local local_ip="$(ip addr show eth0 | grep -m 1 -P -o '(?<=inet )[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
@@ -53,10 +64,6 @@ init_vars() {
       export SERVICE_REDPILL=${SERVICE_REDPILL:-enabled}
       ;;
   esac 
-
- export SERVICE_LOGSTASH_FORWARDER_CONF=${SERVICE_LOGSTASH_FORWARDER_CONF:-/opt/logstash-forwarder/marathon.conf}
- export SERVICE_REDPILL_MONITOR=${SERVICE_REDPILL_MONITOR:-marathon}
-
 }
 
 
@@ -79,7 +86,7 @@ jvm_opts=( "-Djava.library.path=/usr/local/lib:/usr/lib64:/usr/lib"
     cmd_flags+=( "${!i}" )
   done
  
-  marathon_cmd="java ${jvm_opts[@]}  -cp $JSONLOGBACK:/usr/bin/marathon mesosphere.marathon.Main ${cmd_flags[@]}"
+  marathon_cmd="java ${jvm_opts[*]}  -cp $JSONLOGBACK:/usr/bin/marathon mesosphere.marathon.Main ${cmd_flags[*]}"
   export SERVICE_MARATHON_CMD=${SERVICE_MARATHON_CMD:-"$(__escape_svsr_txt "$marathon_cmd")"}
 }
 
@@ -90,8 +97,10 @@ main() {
   echo "[$(date)[App-Name] $APP_NAME"
   echo "[$(date)][Environment] $ENVIRONMENT"
 
+  __config_service_consul_template
   __config_service_logstash_forwarder
   __config_service_redpill
+  __config_service_rsyslog
 
   config_marathon
 

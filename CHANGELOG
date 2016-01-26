@@ -3,7 +3,6 @@
  - Consul template and envconsul support added
  - Bump Marathon to 0.14.0-1.0.450.ubuntu1404
 
-
 2015-12-21 - 1.2.1:
  - Bump to Mesos 0.26
 
