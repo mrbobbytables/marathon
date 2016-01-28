@@ -27,11 +27,7 @@ init_vars() {
   export MARATHON_LOG_FILE=${MARATHON_LOG_FILE:-marathon.log}
   export MARATHON_LOG_FILE_LAYOUT=${MARATHON_LOG_FILE_LAYOUT:-json}
 
-  # if consul template is to be used, configure rsyslog
   export SERVICE_CONSUL_TEMPLATE=${SERVICE_CONSUL_TEMPLATE:-disabled}
-  if [[ "$SERVICE_CONSUL_TEMPLATE" == "enabled" ]]; then
-    export SERVICE_RSYSLOG=${SERVICE_RSYSLOG:-enabled}
-  fi
   export SERVICE_LOGSTASH_FORWARDER_CONF=${SERVICE_LOGSTASH_FORWARDER_CONF:-/opt/logstash-forwarder/marathon.conf}
   export SERVICE_REDPILL_MONITOR=${SERVICE_REDPILL_MONITOR:-marathon}
 
@@ -51,6 +47,7 @@ init_vars() {
       export SERVICE_LOGSTASH_FORWARDER=${SERVICE_LOGSTASH_FORWARDER:-disabled}
       export SERVICE_REDPILL=${SERVICE_REDPILL:-disabled}
       if [[ "$SERVICE_CONSUL_TEMPLATE" == "enabled" ]]; then
+        export SERVICE_LOGROTATE=${SERVICE_LOGROTATE:-disabled}
         export CONSUL_TEMPLATE_LOG_LEVEL=${CONSUL_TEMPLATE_LOG_LEVEL:-debug}
       fi
       ;;
@@ -64,6 +61,11 @@ init_vars() {
       export SERVICE_REDPILL=${SERVICE_REDPILL:-enabled}
       ;;
   esac 
+
+  if [[ "$SERVICE_CONSUL_TEMPLATE" == "enabled" ]]; then
+    export SERVICE_RSYSLOG=${SERVICE_RSYSLOG:-enabled}
+    export SERVICE_LOGROTATE=${SERVICE_LOGROTATE:-enabled}
+  fi
 }
 
 
@@ -98,6 +100,7 @@ main() {
   echo "[$(date)][Environment] $ENVIRONMENT"
 
   __config_service_consul_template
+  __config_service_logrotate
   __config_service_logstash_forwarder
   __config_service_redpill
   __config_service_rsyslog

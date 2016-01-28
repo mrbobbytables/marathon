@@ -1,7 +1,7 @@
 ################################################################################
 # marathon: 1.3.0
-# Date: 1/26/2016
-# Marathon Version: 0.14.0-1.0.450.ubuntu1404
+# Date: 1/27/2016
+# Marathon Version: 0.14.1-1.0.455.ubuntu1404
 # Mesos Version: 0.26.0-0.2.145.ubuntu1404
 #
 # Description:
@@ -13,7 +13,7 @@ FROM mrbobbytables/mesos-base:1.2.0
 MAINTAINER Bob Killen / killen.bob@gmail.com / @mrbobbytables
 
 
-ENV VERSION_MARATHON=0.14.0-1.0.450.ubuntu1404
+ENV VERSION_MARATHON=0.14.1-1.0.455.ubuntu1404
 
 RUN apt-get -y update                   \
  && apt-get -y install                  \
